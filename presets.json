@@ -1,0 +1,12 @@
+{
+    "the bridge": {
+      "players": [
+        { "roomName": "Bedroom", "volume": 30}
+      ],
+      "state": "PLAYING",
+      "favorite": "the bridge",
+      "uri": "x-rincon-stream:RINCON_0000000000001500",
+      "playMode": "SHUFFLE",
+      "pauseOthers": true
+    }
+}
