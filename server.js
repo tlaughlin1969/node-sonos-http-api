@@ -6,6 +6,7 @@ var SonosHttpAPI = require('./lib/sonos-http-api.js');
 var nodeStatic = require('node-static');
 var fs = require('fs');
 var path = require('path');
+var process = require('process');
 var webroot = path.resolve(__dirname, 'static');
 
 var settings = {
@@ -22,6 +23,16 @@ if (!fs.existsSync(webroot + '/tts/')) {
   fs.mkdirSync(webroot + '/tts/');
 }
 
+// Write process id pid to allow shut down by other applications
+if (settings.pid) {
+  console.log('process Id', process.pid);
+  var file = path.join(__dirname,settings.pid)
+  fs.writeFile( file,process.pid,function(err) {
+    if (err) {
+      return console.error(err);
+    }
+  });
+  }
 // load user settings
 try {
   var userSettings = require(path.resolve(__dirname, 'settings.json'));
@@ -34,7 +45,15 @@ if (userSettings) {
     settings[i] = userSettings[i];
   }
 }
-
+if (userSettings.pid) {
+  console.log('process Id', process.pid);
+  var file = path.join(__dirname,settings.pid)
+  fs.writeFile( file,process.pid,function(err) {
+    if (err) {
+      return console.error(err);
+    }
+  });
+}
 var fileServer = new nodeStatic.Server(webroot);
 var discovery = new SonosDiscovery(settings);
 var api = new SonosHttpAPI(discovery, settings);
