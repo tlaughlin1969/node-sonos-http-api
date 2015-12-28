@@ -5,7 +5,7 @@ echo $node
 sudo kill $node
 
 
-node /home/pi/sonos/node-sonos-http-api/server.js&
+sudo node /home/pi/sonos/node-sonos-http-api/server.js&
 sleep 5
 echo "done"
 
